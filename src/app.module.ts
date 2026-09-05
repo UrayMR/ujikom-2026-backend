@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { createObserveModule } from '@nestjs/observe';
-import { EmployeeModule } from './modules/employee/employee.module.js';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from '@modules/users/users.module.js';
@@ -10,6 +9,7 @@ import databaseConfig from '@config/database.config.js';
 import authConfig from '@config/auth.config.js';
 import { DatabaseType } from 'typeorm';
 import { SharedModule } from '@modules/shared/shared.module.js';
+import { EmployeesModule } from '@modules/employees/employees.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -46,9 +46,9 @@ const getEnvFilePath = () => {
     }),
 
     SharedModule,
-    UsersModule,
-    EmployeeModule,
     AuthModule,
+    UsersModule,
+    EmployeesModule,
   ],
   controllers: [],
   providers: [],
