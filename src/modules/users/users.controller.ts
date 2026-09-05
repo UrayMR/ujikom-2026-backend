@@ -12,10 +12,10 @@ import {
 import { UsersService } from './users.service.js';
 import { CreateUserDto } from './dto/create-user.dto.js';
 import { UpdateUserDto } from './dto/update-user.dto.js';
-import { JwtAuthGuard } from '../../modules/auth/guards/jwt-auth.guard.js';
-import { RolesGuard } from '../../modules/auth/guards/roles.guard.js';
-import { Roles } from '../../modules/auth/decorators/roles.decorator.js';
-import { RolesEnum } from '../../modules/shared/enums/roles.enum.js';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
+import { RolesGuard } from '../auth/guards/roles.guard.js';
+import { Roles } from '../auth/decorators/roles.decorator.js';
+import { RolesEnum } from '../shared/enums/roles.enum.js';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
