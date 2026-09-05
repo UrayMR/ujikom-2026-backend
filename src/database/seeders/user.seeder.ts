@@ -4,7 +4,7 @@ import { User } from '../../modules/users/entities/user.entity.js';
 
 export class UserSeeder {
   static async run(userRepository: Repository<User>) {
-    console.log('Seeding UserSeeder...');
+    console.log('Seeding User...');
     const adminEmail = 'admin@admin.com';
 
     const existingAdmin = await userRepository.findOne({
@@ -22,9 +22,9 @@ export class UserSeeder {
       });
 
       await userRepository.save(adminUser);
-      console.log('Seeding User Seeder Completed.');
+      console.log('Seeding User Completed.');
     } else {
-      console.log('Seeding User Seeder Failed (Admin user already exists).');
+      console.log('Seeding User Failed (Admin user already exists).');  
     }
   }
 }
