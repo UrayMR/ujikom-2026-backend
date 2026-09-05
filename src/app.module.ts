@@ -5,7 +5,7 @@ import { AppService } from './app.service.js';
 import { EmployeeModule } from './modules/employee/employee.module.js';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users/users.module.js';
+import { UsersModule } from './modules/users/users.module.js';
 import { AuthModule } from './auth/auth.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();

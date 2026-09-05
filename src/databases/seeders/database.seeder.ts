@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { AppModule } from '../../app.module.js';
-import { User } from '../../users/entities/user.entity.js';
+import { User } from '../../modules/users/entities/user.entity.js';
 import { UserSeeder } from './user.seeder.js';
 
 async function bootstrap() {

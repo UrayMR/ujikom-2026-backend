@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { User } from '../../users/entities/user.entity.js';
+import { User } from '../../modules/users/entities/user.entity.js';
 
 export class UserSeeder {
   static async run(userRepository: Repository<User>) {
