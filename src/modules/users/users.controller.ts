@@ -1,4 +1,3 @@
-// src/users/users.controller.ts
 import {
   Controller,
   Get,
@@ -12,14 +11,11 @@ import {
 import { UsersService } from './users.service.js';
 import { CreateUserDto } from './dto/create-user.dto.js';
 import { UpdateUserDto } from './dto/update-user.dto.js';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
-import { RolesGuard } from '../auth/guards/roles.guard.js';
-import { Roles } from '../auth/decorators/roles.decorator.js';
 import { RolesEnum } from '../shared/enums/roles.enum.js';
+import { Auth } from '../shared/decorators/auth.decorator.js';
 
 @Controller('users')
-@UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(RolesEnum.Admin)
+@Auth(RolesEnum.Admin)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

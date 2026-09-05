@@ -6,19 +6,15 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service.js';
 import { CreateEmployeeDto } from './dto/create-employee.dto.js';
 import { UpdateEmployeeDto } from './dto/update-employee.dto.js';
 import { RolesEnum } from '../shared/enums/roles.enum.js';
-import { Roles } from '../auth/decorators/roles.decorator.js';
-import { RolesGuard } from '../auth/guards/roles.guard.js';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
+import { Auth } from '../shared/decorators/auth.decorator.js';
 
 @Controller('employees')
-@UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(RolesEnum.Admin)
+@Auth(RolesEnum.Admin)
 export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) {}
 
