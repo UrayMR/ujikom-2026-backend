@@ -1,16 +1,15 @@
 import { Module } from '@nestjs/common';
 import { createObserveModule } from '@nestjs/observe';
-import { AppController } from './app.controller.js';
-import { AppService } from './app.service.js';
 import { EmployeeModule } from './modules/employee/employee.module.js';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './modules/users/users.module.js';
-import { AuthModule } from './modules/auth/auth.module.js';
-import appConfig from './config/app.config.js';
-import databaseConfig from './config/database.config.js';
-import authConfig from './config/auth.config.js';
+import { UsersModule } from '@modules/users/users.module.js';
+import { AuthModule } from '@modules/auth/auth.module.js';
+import appConfig from '@config/app.config.js';
+import databaseConfig from '@config/database.config.js';
+import authConfig from '@config/auth.config.js';
 import { DatabaseType } from 'typeorm';
+import { SharedModule } from '@modules/shared/shared.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -46,11 +45,12 @@ const getEnvFilePath = () => {
       inject: [ConfigService],
     }),
 
+    SharedModule,
     UsersModule,
     EmployeeModule,
     AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
