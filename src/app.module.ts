@@ -7,44 +7,49 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './modules/users/users.module.js';
 import { AuthModule } from './modules/auth/auth.module.js';
+import appConfig from './config/app.config.js';
+import databaseConfig from './config/database.config.js';
+import authConfig from './config/auth.config.js';
+import { DatabaseType } from 'typeorm';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
+
+// Get environment file path based on APP_ENV
+const getEnvFilePath = () => {
+  const env = process.env.APP_ENV || 'development';
+  if (env === 'production') return '.env.production';
+  if (env === 'staging') return '.env.staging';
+  return '.env';
+};
 
 @Module({
   imports: [
     ConfigModule.forRoot({
+      envFilePath: getEnvFilePath(),
       isGlobal: true,
+      load: [appConfig, databaseConfig, authConfig],
     }),
 
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        type: 'mysql',
-        host: configService.get<string>('DB_HOST'),
-        port: configService.get<number>('DB_PORT'),
-        username: configService.get<string>('DB_USER'),
-        password: configService.get<string>('DB_PASSWORD'),
-        database: configService.get<string>('DB_NAME'),
+        type: configService.get<string>('database.type') as DatabaseType as any,
+        host: configService.get<string>('database.host'),
+        port: configService.get<string>('database.port'),
+        username: configService.get<string>('database.username'),
+        password: configService.get<string>('database.password'),
+        database: configService.get<string>('database.name'),
         autoLoadEntities: true,
-        synchronize: true, // development only, set to false in production
+        synchronize:
+          configService.get<string>('app.environment') === 'development',
       }),
-      inject: [ConfigService], // Inject ConfigService into useFactory
+      inject: [ConfigService],
     }),
 
     UsersModule,
     EmployeeModule,
     AuthModule,
-
-    // Distributed tracing, auto-correlated logs, request/job metrics, error
-    // telemetry, alarms, and more — out of the box. Sign up at https://observe.nestjs.com
-    //   ObserveModule.forRoot({
-    //     appKey: process.env.OBSERVE_APP_KEY ?? '',
-    //     appSecret: process.env.OBSERVE_APP_SECRET ?? '',
-    //     serviceId: 'nest-typescript-starter',
-    //   }),
-    //   EmployeeModule,
   ],
-
   controllers: [AppController],
   providers: [AppService],
 })
