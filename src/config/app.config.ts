@@ -2,8 +2,10 @@ import { registerAs } from '@nestjs/config';
 
 export default registerAs('app', () => ({
   name: process.env.APP_NAME || 'NestJS',
-  environment: process.env.NODE_ENV || 'development',
-  port: process.env.PORT || '3000',
+  key: process.env.APP_KEY || 'default_app_key',
+  environment: process.env.APP_ENV || 'development',
+  port: process.env.APP_PORT || '3000',
+
   apiPrefix: process.env.API_PREFIX || 'api',
   versioning: {
     enable: process.env.VERSIONING_ENABLE === 'true' || false,
