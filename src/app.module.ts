@@ -5,6 +5,7 @@ import { AppService } from './app.service.js';
 import { EmployeeModule } from './modules/employee/employee.module.js';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsersModule } from './users/users.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -28,6 +29,9 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       }),
       inject: [ConfigService], // Inject ConfigService into useFactory
     }),
+
+    UsersModule,
+    EmployeeModule,
 
     // Distributed tracing, auto-correlated logs, request/job metrics, error
     // telemetry, alarms, and more — out of the box. Sign up at https://observe.nestjs.com
