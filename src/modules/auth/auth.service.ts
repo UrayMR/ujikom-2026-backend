@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service.js';
+import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto.js';
 
 @Injectable()
@@ -10,10 +11,16 @@ export class AuthService {
     private readonly usersService: UsersService,
   ) {}
 
-  async login(email: string, password: string) {
+  async validatePassword(userPassword: string, password: string) {
+    return await bcrypt.compare(password, userPassword);
+  }
+
+  async login(LoginDto: LoginDto) {
+    const { email, password } = LoginDto;
+
     const user = await this.usersService.findByEmail(email);
 
-    if (!user || !(await this.usersService.validatePassword(user, password))) {
+    if (!user || !(await this.validatePassword(user.password, password))) {
       throw new Error('Invalid email or password');
     }
 
