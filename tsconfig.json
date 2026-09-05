@@ -2,12 +2,13 @@
   "compilerOptions": {
     "ignoreDeprecations": "6.0",
     "baseUrl": "./src",
-    "paths": {
-      "@common/*": ["common/*"],
-      "@modules/*": ["modules/*"],
-      "@config/*": ["config/*"],
-      "@database/*": ["databases/*"],
-    },
+    // Aliases doesnt work with nodenext module (especially nest environment), so we need to use relative paths instead of aliases
+    // "paths": {
+    //   "@common/*": ["common/*"],
+    //   "@modules/*": ["modules/*"],
+    //   "@config/*": ["config/*"],
+    //   "@database/*": ["databases/*"],
+    // },
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "resolvePackageJsonExports": true,

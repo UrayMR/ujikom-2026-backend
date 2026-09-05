@@ -1,4 +1,3 @@
-import { RolesEnum } from '@modules/shared/enums/roles.enum.js';
 import {
   IsEmail,
   IsEnum,
@@ -7,6 +6,7 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
+import { RolesEnum } from '../../../modules/shared/enums/roles.enum.js';
 
 export class CreateUserDto {
   @IsString()

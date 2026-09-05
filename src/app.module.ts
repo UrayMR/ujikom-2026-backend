@@ -2,14 +2,14 @@ import { Module } from '@nestjs/common';
 import { createObserveModule } from '@nestjs/observe';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from '@modules/users/users.module.js';
-import { AuthModule } from '@modules/auth/auth.module.js';
-import appConfig from '@config/app.config.js';
-import databaseConfig from '@config/database.config.js';
-import authConfig from '@config/auth.config.js';
 import { DatabaseType } from 'typeorm';
-import { SharedModule } from '@modules/shared/shared.module.js';
-import { EmployeesModule } from '@modules/employees/employees.module.js';
+import authConfig from './config/auth.config.js';
+import databaseConfig from './config/database.config.js';
+import appConfig from './config/app.config.js';
+import { SharedModule } from './modules/shared/shared.module.js';
+import { AuthModule } from './modules/auth/auth.module.js';
+import { UsersModule } from './modules/users/users.module.js';
+import { EmployeesModule } from './modules/employees/employees.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 

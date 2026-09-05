@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import { RolesEnum } from '../../../modules/shared/enums/roles.enum.js';
 import {
   Column,
   CreateDateColumn,
@@ -22,7 +23,7 @@ export class User {
   @Exclude()
   password: string;
 
-  @Column({ default: 'admin' })
+  @Column({ default: RolesEnum.Admin })
   role: string;
 
   @Column({ nullable: true })
