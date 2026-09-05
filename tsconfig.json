@@ -1,5 +1,13 @@
 {
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "baseUrl": "./src",
+    "paths": {
+      "@common/*": ["common/*"],
+      "@modules/*": ["modules/*"],
+      "@config/*": ["config/*"],
+      "@database/*": ["databases/*"],
+    },
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "resolvePackageJsonExports": true,
