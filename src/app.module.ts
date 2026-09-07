@@ -12,6 +12,7 @@ import { UsersModule } from './modules/users/users.module.js';
 import { EmployeesModule } from './modules/employees/employees.module.js';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard.js';
+import { AppController } from './app.controller.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -52,7 +53,7 @@ const getEnvFilePath = () => {
     UsersModule,
     EmployeesModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [
     {
       provide: APP_GUARD,
