@@ -26,8 +26,7 @@ export class TransformInterceptor<T> implements NestInterceptor<
         success: true,
         code: HttpStatus.OK,
         message: responseData?.message || 'Request successful',
-        data:
-          responseData?.data !== undefined ? responseData.data : responseData,
+        data: responseData?.data !== undefined ? responseData.data : null,
       })),
     );
   }
