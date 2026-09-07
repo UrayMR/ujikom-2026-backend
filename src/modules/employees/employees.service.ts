@@ -33,15 +33,12 @@ export class EmployeesService {
     id: string,
     updateEmployeeDto: UpdateEmployeeDto,
   ): Promise<Employee> {
-    const employee = await this.findOne(id);
-    Object.assign(employee, updateEmployeeDto);
-    return await this.employeeRepository.save(employee);
+    await this.employeeRepository.update(id, updateEmployeeDto);
+    return this.findOne(id);
   }
 
-  async remove(id: string): Promise<{ message: string }> {
+  async remove(id: string): Promise<void> {
     const employee = await this.findOne(id);
-    const employeeName = employee.name;
     await this.employeeRepository.remove(employee);
-    return { message: `Employee '${employeeName}' has been deleted` };
   }
 }

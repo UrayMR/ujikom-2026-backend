@@ -53,10 +53,8 @@ export class UsersService {
     return this.findOne(id);
   }
 
-  async remove(id: string): Promise<{ message: string }> {
+  async remove(id: string): Promise<void> {
     const user = await this.findOne(id);
-    const userName = user.name;
     await this.userRepository.remove(user);
-    return { message: `User '${userName}' has been deleted` };
   }
 }
