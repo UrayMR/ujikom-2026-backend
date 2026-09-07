@@ -28,7 +28,7 @@ export class EmployeesController {
   @Get()
   async findAll() {
     const employees = await this.employeesService.findAll();
-    return new ApiResponse('Employees found successfully', employees);
+    return new ApiResponse('Employees data retrieved successfully', employees);
   }
 
   @Get(':id')
