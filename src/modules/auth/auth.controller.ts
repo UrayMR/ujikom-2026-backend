@@ -28,7 +28,7 @@ export class AuthController {
   testAuth(@CurrentUser() user: JwtPayload) {
     return {
       message: 'Akses berhasil',
-      user,
+      data: user,
     };
   }
 }
