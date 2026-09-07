@@ -12,6 +12,7 @@ import { LoginDto } from './dto/login.dto.js';
 import { CurrentUser } from './decorators/current-user.decorator.js';
 import type { JwtPayload } from './interfaces/jwt-payload.interface.js';
 import { Public } from '../shared/decorators/public.decorator.js';
+import { ApiResponse } from 'common/responses/api-response.js';
 
 @Controller('auth')
 export class AuthController {
@@ -20,15 +21,13 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   @Public()
-  login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto);
+  async login(@Body() loginDto: LoginDto) {
+    const result = await this.authService.login(loginDto);
+    return new ApiResponse('Login Successful', result);
   }
 
   @Get('test')
   testAuth(@CurrentUser() user: JwtPayload) {
-    return {
-      message: 'Akses berhasil',
-      data: user,
-    };
+    return new ApiResponse('You are authenticated', user);
   }
 }
