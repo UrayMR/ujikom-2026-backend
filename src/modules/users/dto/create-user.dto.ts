@@ -25,8 +25,4 @@ export class CreateUserDto {
   @IsString()
   @IsEnum(RolesEnum)
   role: RolesEnum;
-
-  @IsString()
-  @IsOptional()
-  rememberToken?: string;
 }
