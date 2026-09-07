@@ -3,7 +3,6 @@ import { createObserveModule } from '@nestjs/observe';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseType } from 'typeorm';
-import authConfig from './config/auth.config.js';
 import databaseConfig from './config/database.config.js';
 import appConfig from './config/app.config.js';
 import { SharedModule } from './modules/shared/shared.module.js';
@@ -11,8 +10,9 @@ import { AuthModule } from './modules/auth/auth.module.js';
 import { UsersModule } from './modules/users/users.module.js';
 import { EmployeesModule } from './modules/employees/employees.module.js';
 import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard.js';
 import { AppController } from './app.controller.js';
+import sessionConfig from './config/session.config.js';
+import { SessionAuthGuard } from './modules/auth/guards/session-auth.guard.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -29,7 +29,7 @@ const getEnvFilePath = () => {
     ConfigModule.forRoot({
       envFilePath: getEnvFilePath(),
       isGlobal: true,
-      load: [appConfig, databaseConfig, authConfig],
+      load: [appConfig, databaseConfig, sessionConfig],
     }),
 
     TypeOrmModule.forRootAsync({
@@ -57,7 +57,7 @@ const getEnvFilePath = () => {
   providers: [
     {
       provide: APP_GUARD,
-      useClass: JwtAuthGuard,
+      useClass: SessionAuthGuard,
     },
   ],
 })

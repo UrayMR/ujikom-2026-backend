@@ -4,11 +4,40 @@ import { AppModule, ObserveInstrument } from './app.module.js';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor.js';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter.js';
 import { Reflector } from '@nestjs/core';
+import { TypeOrmSessionStore } from './modules/auth/stores/typeorm-session.store.js';
+import session from 'express-session';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     instrument: ObserveInstrument,
   });
+
+  // CORS Configuration
+  app.enableCors({
+    origin: 'http://localhost:3000', // Frontend URL
+    credentials: true,
+  });
+
+  // Session Middleware
+
+  const configService = app.get(ConfigService);
+  const sessionStore = app.get(TypeOrmSessionStore);
+
+  app.use(
+    session({
+      store: sessionStore,
+      secret: configService.getOrThrow<string>('session.secret'),
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: configService.getOrThrow<number>('session.maxAge'),
+      },
+    }),
+  );
 
   // Global Prefix
   app.setGlobalPrefix('api');
