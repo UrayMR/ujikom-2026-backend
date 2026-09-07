@@ -8,6 +8,9 @@ async function bootstrap() {
     instrument: ObserveInstrument,
   });
 
+  // Global Prefix
+  app.setGlobalPrefix('api');
+
   // Api Response Transform Interceptor
   app.useGlobalInterceptors(new TransformInterceptor());
 
