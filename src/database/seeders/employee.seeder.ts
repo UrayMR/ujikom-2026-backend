@@ -12,7 +12,7 @@ export class EmployeeSeeder {
       phoneNumber: faker.phone.number(),
       address: faker.location.streetAddress(),
       birthDate: faker.date.past().toISOString().slice(0, 10),
-      gender: faker.person.gender(),
+      gender: faker.helpers.arrayElement(['male', 'female']),
       salary: faker.number.int({ min: 5000000, max: 10000000 }),
     }));
 
