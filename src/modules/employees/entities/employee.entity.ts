@@ -14,6 +14,24 @@ export class Employee {
   @Column()
   name: string;
 
+  @Column()
+  email: string;
+
+  @Column()
+  phoneNumber: string;
+
+  @Column()
+  address: string;
+
+  @Column({ type: 'date', nullable: true })
+  birthDate: Date | null;
+
+  @Column()
+  gender: string;
+
+  @Column({ type: 'float', default: 0 })
+  salary: number;
+
   @CreateDateColumn()
   createdAt: Date;
 
