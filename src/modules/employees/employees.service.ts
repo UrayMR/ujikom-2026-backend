@@ -43,6 +43,9 @@ export class EmployeesService {
   }
 
   async removeBulk(ids: string[]): Promise<void> {
+    if (!ids || ids.length === 0) {
+      throw new Error('At least one employee ID is required');
+    }
     await this.employeeRepository.delete({ id: In(ids) });
   }
 }

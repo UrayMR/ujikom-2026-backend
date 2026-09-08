@@ -46,15 +46,15 @@ export class EmployeesController {
     return new ApiResponse('Employee updated successfully', employee);
   }
 
+  @Delete('bulk')
+  async removeBulk(@Body('ids') ids: string[]) {
+    await this.employeesService.removeBulk(ids);
+    return new ApiResponse('Employees deleted successfully');
+  }
+
   @Delete(':id')
   async remove(@Param('id') id: string) {
     await this.employeesService.remove(id);
     return new ApiResponse('Employee deleted successfully');
-  }
-
-  @Delete('bulk')
-  async removeBulk(@Body() ids: string[]) {
-    await this.employeesService.removeBulk(ids);
-    return new ApiResponse('Employees deleted successfully');
   }
 }
