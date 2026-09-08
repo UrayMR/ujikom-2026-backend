@@ -14,7 +14,16 @@ async function bootstrap() {
   const userRepository = app.get(getRepositoryToken(User));
   const employeeRepository = app.get(getRepositoryToken(Employee));
 
+  const isFresh = process.argv.includes('--fresh');
+
   try {
+    if (isFresh) {
+      console.log('[INFO] Cleaning existing data (--fresh flag detected)...');
+
+      await employeeRepository.clear();
+      await userRepository.clear();
+    }
+
     await UserSeeder.run(userRepository);
     await EmployeeSeeder.run(employeeRepository);
 

@@ -9,11 +9,15 @@ export class EmployeeSeeder {
     const employeesData = Array.from({ length: 10 }).map(() => ({
       name: faker.person.fullName(),
       email: faker.internet.email(),
-      phoneNumber: faker.phone.number(),
+      phoneNumber: faker.phone.number({ style: 'international' }),
       address: faker.location.streetAddress(),
       birthDate: faker.date.past().toISOString().slice(0, 10),
       gender: faker.helpers.arrayElement(['male', 'female']),
-      salary: faker.number.int({ min: 5000000, max: 10000000 }),
+      salary: faker.number.int({
+        min: 5000000,
+        max: 10000000,
+        multipleOf: 1000000,
+      }),
     }));
 
     const employees = employeeRepository.create(employeesData);
