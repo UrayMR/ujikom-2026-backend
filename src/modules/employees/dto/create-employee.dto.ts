@@ -2,6 +2,8 @@ import { Type } from 'class-transformer';
 import {
   IsDate,
   IsEmail,
+  IsEnum,
+  isEnum,
   IsInt,
   IsNotEmpty,
   IsString,
@@ -30,7 +32,7 @@ export class CreateEmployeeDto {
   @IsNotEmpty()
   birthDate: Date;
 
-  @IsString()
+  @IsEnum(['male', 'female'])
   @IsNotEmpty()
   gender: string;
 

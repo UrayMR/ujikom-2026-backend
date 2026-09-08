@@ -26,7 +26,7 @@ export class Employee {
   @Column({ type: 'date', nullable: true })
   birthDate: Date | null;
 
-  @Column()
+  @Column({ type: 'enum', enum: ['male', 'female'] })
   gender: string;
 
   @Column({ type: 'float', default: 0 })
