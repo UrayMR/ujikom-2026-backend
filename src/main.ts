@@ -1,5 +1,9 @@
 import { NestFactory } from '@nestjs/core';
-import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
+import {
+  BadRequestException,
+  ClassSerializerInterceptor,
+  ValidationPipe,
+} from '@nestjs/common';
 import { AppModule, ObserveInstrument } from './app.module.js';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor.js';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter.js';
@@ -20,7 +24,6 @@ async function bootstrap() {
   });
 
   // Session Middleware
-
   const configService = app.get(ConfigService);
   const sessionStore = app.get(TypeOrmSessionStore);
 
@@ -43,7 +46,28 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   // Validation Pipe
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true,
+      exceptionFactory: (errors) => {
+        return new BadRequestException({
+          message: 'Validation failed',
+          errors: errors.flatMap((error) =>
+            Object.values(error.constraints ?? {}).length > 0
+              ? [
+                  {
+                    field: error.property,
+                    message: Object.values(error.constraints ?? {}),
+                  },
+                ]
+              : [],
+          ),
+        });
+      },
+    }),
+  );
 
   // Apply class-transformer decorators like @Exclude on entities
   app.useGlobalInterceptors(

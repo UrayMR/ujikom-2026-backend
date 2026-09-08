@@ -1,7 +1,7 @@
 import {
-  ExceptionFilter,
-  Catch,
   ArgumentsHost,
+  Catch,
+  ExceptionFilter,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
@@ -18,27 +18,47 @@ export class HttpExceptionFilter implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    const statusMessage =
-      exception instanceof HttpException
-        ? exception.message || 'Error ' + statusCode
-        : 'Internal server error';
-
-    let errors: string | object = 'An unexpected error occurred';
     if (exception instanceof HttpException) {
       const errorResponse = exception.getResponse();
-      errors =
-        typeof errorResponse === 'object' && errorResponse !== null
-          ? (errorResponse as any).message || errorResponse
-          : errorResponse;
-    } else if (exception instanceof Error) {
-      errors = exception.message;
+
+      if (typeof errorResponse === 'object' && errorResponse !== null) {
+        const body = errorResponse as {
+          message?: string;
+          errors?: unknown;
+        };
+
+        // Validation error
+        if (body.errors) {
+          return response.status(statusCode).json({
+            success: false,
+            code: statusCode,
+            message: body.message ?? 'Validation failed',
+            errors: body.errors,
+          });
+        }
+
+        // HttpException biasa
+        return response.status(statusCode).json({
+          success: false,
+          code: statusCode,
+          message:
+            typeof body.message === 'string' ? body.message : exception.message,
+        });
+      }
+
+      return response.status(statusCode).json({
+        success: false,
+        code: statusCode,
+        message:
+          typeof errorResponse === 'string' ? errorResponse : exception.message,
+      });
     }
 
-    response.status(statusCode).json({
+    // Unexpected error
+    return response.status(500).json({
       success: false,
-      code: statusCode,
-      message: statusMessage,
-      error: errors,
+      code: 500,
+      message: 'Internal server error',
     });
   }
 }
