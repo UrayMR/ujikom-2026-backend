@@ -21,7 +21,11 @@ export class EmployeeSeeder {
         'S2',
         'S3',
       ]),
-      birthDate: faker.date.past().toISOString().slice(0, 10),
+      birthDate: faker.date.birthdate({
+        min: 20,
+        max: 70,
+        mode: 'age',
+      }),
       gender: faker.helpers.arrayElement(['male', 'female']),
       salary: faker.number.int({
         min: 5000000,
