@@ -27,6 +27,19 @@ export class CreateEmployeeDto {
   @IsNotEmpty()
   address: string;
 
+  @IsEnum([
+    'Tidak/Belum Pernah',
+    'SD',
+    'SMP',
+    'SMA/SMK',
+    'D1/D2/D3',
+    'S1/D4',
+    'S2',
+    'S3',
+  ])
+  @IsNotEmpty()
+  education: string;
+
   @Type(() => Date)
   @IsDate()
   @IsNotEmpty()

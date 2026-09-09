@@ -23,6 +23,22 @@ export class Employee {
   @Column()
   address: string;
 
+  @Column({
+    type: 'enum',
+    enum: [
+      'Tidak/Belum Pernah',
+      'SD',
+      'SMP',
+      'SMA/SMK',
+      'D1/D2/D3',
+      'S1/D4',
+      'S2',
+      'S3',
+    ],
+    nullable: true,
+  })
+  education: string;
+
   @Column({ type: 'date', nullable: true })
   birthDate: Date | null;
 
