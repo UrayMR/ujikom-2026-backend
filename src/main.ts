@@ -72,6 +72,6 @@ async function bootstrap() {
   // Http Exception Filter
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  await app.listen(process.env.APP_PORT ?? 3000);
+  await app.listen(process.env.APP_PORT ?? 8080, '0.0.0.0');
 }
 await bootstrap();
